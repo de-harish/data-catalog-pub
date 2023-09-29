@@ -1,0 +1,11 @@
+Collecting pyhocon
+  Using cached https://files.pythonhosted.org/packages/9d/05/36397967e9f9abd3eb64006ffc4c766dc5d6bfd218bbbfef84acc4395e6b/pyhocon-0.3.60.tar.gz
+Collecting pyparsing<4,>=2 (from pyhocon)
+  Using cached https://files.pythonhosted.org/packages/6c/10/a7d0fa5baea8fe7b50f448ab742f26f52b80bfca85ac2be9d35cdd9a3246/pyparsing-3.0.9-py3-none-any.whl
+Building wheels for collected packages: pyhocon
+  Running setup.py bdist_wheel for pyhocon: started
+  Running setup.py bdist_wheel for pyhocon: finished with status 'done'
+  Stored in directory: /home/harish.ramesh/.cache/pip/wheels/85/3e/68/9d903724701b2e4c582cf2cb8f949fc4ebd00ae9f5cd88158f
+Successfully built pyhocon
+Installing collected packages: pyparsing, pyhocon
+Successfully installed pyhocon-0.3.60 pyparsing-3.0.9
