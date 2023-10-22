@@ -2,7 +2,7 @@ from google.cloud import bigquery
 import csv
 import logging
 import datetime
-
+import re
 
 def export_bigquery_metadata(project_id, data_folder="tlb_extracted_metadata"):
     logging.getLogger().setLevel(logging.INFO)
@@ -41,6 +41,10 @@ def export_bigquery_metadata(project_id, data_folder="tlb_extracted_metadata"):
                 table_ref = client.get_table(table.reference)
                 # Extract metadata fields
                 description = table_ref.description if table_ref.description else ""
+                # Replace newline characters with <br>
+                description = description.replace("\n", "<br>")
+                # Make any text before a colon at the start of a line bold
+                # description = re.sub(r'(^|\s)([^:<br>]+:)', r'\1<strong>\2</strong>', description)
                 tags_list = []
                 for key, value in table_ref.labels.items():
                     if "slack_id" not in key.lower():

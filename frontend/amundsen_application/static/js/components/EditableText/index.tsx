@@ -168,9 +168,8 @@ class EditableText extends React.Component<
       return (
         <div className="editable-text">
           <div className="markdown-wrapper">
-            <ReactMarkdown allowDangerousHtml={!!allowDangerousHtml}>
-              {value}
-            </ReactMarkdown>
+            <div dangerouslySetInnerHTML={{__html: value}}>
+            </div>
           </div>
           {editable && !value && (
             <button

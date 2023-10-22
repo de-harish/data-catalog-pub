@@ -28,3 +28,4 @@ wheel==0.36.2
 PyJWT>=2.8.0
 setuptools_rust
 cryptography
+db-dtypes

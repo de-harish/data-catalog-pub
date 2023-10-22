@@ -109,7 +109,7 @@ export class EditableSection extends React.Component<
         placement="top"
         overlay={popoverHoverFocus}
       >
-        <a
+        {/* <a
           className="btn btn-flat-icon-dark edit-button"
           href={editUrl}
           target="_blank"
@@ -117,7 +117,7 @@ export class EditableSection extends React.Component<
         >
           <span className="sr-only">{Constants.EDIT_TEXT}</span>
           <img className="icon icon-small icon-edit" alt="" />
-        </a>
+        </a> */}
       </OverlayTrigger>
     );
   };

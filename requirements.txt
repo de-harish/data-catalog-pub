@@ -34,3 +34,4 @@ mkdocs-redirects>=1.0.3
 PyJWT>=2.8.0
 setuptools_rust
 cryptography
+db-dtypes

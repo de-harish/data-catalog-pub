@@ -61,7 +61,7 @@ services:
       command: gunicorn -w 2 --bind :5000 metadata_service.metadata_wsgi
   amundsenfrontend:
       #image: amundsendev/amundsen-frontend:4.2.0
-      image: tlb-amundsen-custom-image:0.4.12
+      image: tlb-amundsen-custom-image:0.4.16
       container_name: amundsenfrontend
       depends_on:
         - amundsenmetadata
