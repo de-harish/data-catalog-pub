@@ -148,7 +148,6 @@ export class EditableSection extends React.Component<
             <span className="section-title title-3">
               {EditableSection.convertText(title)}
             </span>
-            {!readOnly ? this.renderButton() : this.renderReadOnlyButton()}
           </div>
         </label>
         <div className="editable-section-content">{childrenWithProps}</div>

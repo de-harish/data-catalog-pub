@@ -171,6 +171,7 @@ export class SearchPage extends React.Component<SearchPageProps> {
     return (
       <div className="search-list-container">
         <ResourceListHeader resourceTypes={uniqueResourceTypes} />
+        {console.log("results.results",results.results)}
         <PaginatedApiResourceList
           activePage={page_index}
           onPagination={setPageIndex}

@@ -183,3 +183,55 @@ $link-border-size: 2px;
   width: $shimmer-loader-circle-size;
   border-radius: $shimmer-loader-circle-size;
 }
+
+.my-bg-blue-900 {
+  background-color: #1E3A8A;
+}
+.my-nav {
+  margin: 0 auto;
+  padding: 0;
+}
+.my-flex {
+  display: flex;
+  flex-direction: column;
+}
+.my-text-white {
+  color: #ffffff;
+}
+.my-pl-4 {
+  padding-left: 1rem;
+}
+.my-pb-2 {
+  padding-bottom: 0.5rem;
+}
+.my-text-sm {
+  font-size: 16px;
+}
+.my-pr-2 {
+  padding-right: 0.5rem;
+}
+.my-pt-3 {
+  padding-top: 0.75rem;
+}
+.my-inline-flex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width:100%;
+}
+.my-font-bold {
+  font-weight: bold;
+}
+.my-h-6 {
+  height: 1.5rem;
+}
+.my-w-6 {
+  width: 1.5rem;
+}
+.my-mr-2 {
+  margin-right: 0.5rem;
+}
+.my-px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

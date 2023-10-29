@@ -196,6 +196,8 @@ export interface StateProps {
   isExpandCollapseAllBtnVisible: boolean;
   selectedColumnKey: string;
   selectedColumnDetails?: FormattedDataType;
+  partitionColumns?: FormattedDataType[];
+  clusteredColumns?: FormattedDataType[];
 }
 
 export class TableDetail extends React.Component<
@@ -215,6 +217,8 @@ export class TableDetail extends React.Component<
     isExpandCollapseAllBtnVisible: true,
     selectedColumnKey: '',
     selectedColumnDetails: undefined,
+    partitionColumns: [], 
+    clusteredColumns: []
   };
 
   componentDidMount() {
@@ -269,7 +273,7 @@ export class TableDetail extends React.Component<
         getTableLineageDispatch(this.key, defaultDepth);
       }
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ currentTab: this.getDefaultTab() });
+      this.setState({ currentTab: this.getDefaultTab()});
     }
   }
 
@@ -301,6 +305,26 @@ export class TableDetail extends React.Component<
     }
     this.setState(newState);
   };
+
+  filterPartitionColumns() {
+    const columns = this.props.tableData?.columns
+    return columns.filter(column => {
+      if (column.badges) {
+        return column.badges.some(badge => badge.badge_name === "partition column");
+      }
+      return false;
+    });
+  }
+
+  filterClusterColumns() {
+    const columns = this.props.tableData?.columns
+    return columns.filter(column => {
+      if (column.badges) {
+        return column.badges.some(badge => badge.badge_name === "cluster column");
+      }
+      return false;
+    });
+  }
 
   getDefaultTab() {
     return getUrlParam(TAB_URL_PARAM) || Constants.TABLE_TAB.COLUMN;
@@ -673,7 +697,7 @@ export class TableDetail extends React.Component<
 
   render() {
     const { isLoading, statusCode, tableData, notices } = this.props;
-    const { sortedBy, currentTab, isRightPanelOpen, selectedColumnDetails } =
+    const { sortedBy, currentTab, isRightPanelOpen, selectedColumnDetails, partitionColumns, clusteredColumns } =
       this.state;
     let innerContent: React.ReactNode;
 
@@ -835,6 +859,34 @@ export class TableDetail extends React.Component<
               {this.renderProgrammaticDesc(
                 data.programmatic_descriptions.other
               )}
+              {console.log(this.filterPartitionColumns())}
+              {this.filterPartitionColumns()?.length > 0 ? <section className="editable-section">
+                <label className="editable-section-label">
+                  <div className="editable-section-label-wrapper">
+                    <span className="section-title title-3">Partition Column</span>
+                  </div>
+                </label>
+                <div className="editable-section-content">
+                  {this.filterPartitionColumns()?.map((col:any) => 
+                    <button id={col?.key} className="btn tag-button compact" type="button" onClick={() => this.toggleRightPanel(col)}>
+                      <span className="tag-name">{col.key}</span>
+                    </button>)}
+                </div>
+              </section> : null }
+              {console.log(this.filterClusterColumns())}
+              {this.filterClusterColumns()?.length > 0 ? <section className="editable-section">
+                <label className="editable-section-label">
+                  <div className="editable-section-label-wrapper">
+                  <span className="section-title title-3">Cluster Columns</span>
+                  </div>
+                </label>
+                <div className="editable-section-content">
+                {this.filterClusterColumns()?.map((col:any) => 
+                    <button id={col?.key} className="btn tag-button compact" type="button" onClick={() => this.toggleRightPanel(col)}>
+                      <span className="tag-name">{col.key}</span>
+                    </button>)}
+                </div>
+              </section> : null}
             </aside>
             <main className="main-content-panel">
               {currentTab === Constants.TABLE_TAB.COLUMN &&
@@ -851,6 +903,7 @@ export class TableDetail extends React.Component<
         </div>
       );
     }
+    
 
     return (
       <DocumentTitle

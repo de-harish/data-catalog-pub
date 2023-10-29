@@ -194,9 +194,9 @@ const renderSearchBar = (pathname: string) => {
 const generateKeyFromSteps = (tourSteps: TourConfig[], pathname: string) =>
   tourSteps.length
     ? `${tourSteps[0].steps[0].content.substring(
-        0,
-        NUM_CHARS_FOR_KEY
-      )}-path:${pathname}`
+      0,
+      NUM_CHARS_FOR_KEY
+    )}-path:${pathname}`
     : false;
 
 const getPageTourInfo = (pathname: string) => {
@@ -277,7 +277,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ loggedInUser }) => {
           <div>{email}</div>
         </div>
         <MenuItem
-          componentClass={Link}
+          componentclassName={Link}
           id="nav-bar-avatar-link"
           to={userLink}
           href={userLink}
@@ -376,6 +376,11 @@ export const NavBar: React.FC<NavBarProps> = ({ loggedInUser, location }) => {
           <div id="nav-bar-left" className="nav-bar-left">
             <Logo />
           </div>
+          <span style={{ display: "flex", alignItems: "center", color: "white" }}>
+            <img src="https://storage.googleapis.com/tlb-data-dev-data-public-assets/public/certified.svg" className="my-h-6 my-w-6 my-mr-2" />
+
+            - this is a certified product by the talabat data team
+          </span>
           {renderSearchBar(pathname)}
           <div id="nav-bar-right" className="ml-auto nav-bar-right">
             {generateNavLinks(getNavLinks())}
