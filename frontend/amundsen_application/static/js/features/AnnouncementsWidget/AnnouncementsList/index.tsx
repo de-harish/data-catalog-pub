@@ -22,19 +22,7 @@ import './styles.scss';
 const ANNOUNCEMENT_LIST_THRESHOLD = 3;
 const ANNOUNCEMENTS_PAGE_PATH = '/announcements';
 
-const STATIC_ANNOUNCEMENTS: AnnouncementPost[] = [
-  {
-    date: "2023-07-17",
-    title: "Data catalog is under development.",
-    html_content: "<p>Metadata for some tables might be missing. The data governance team is working on it.</p>",
-  },
-  {
-    date: "2023-07-14",
-    title: "Data Lineage",
-    html_content: "<p>Lineage for tables are with depth level 2. Please check the Table detail page of the level 2 dependencies further.</p>",
-  },
-  // Add more static announcements here as necessary
-];
+
 
 
 export interface AnnouncementsListProps {
@@ -93,15 +81,15 @@ const AnnouncementsList: React.FC<AnnouncementsListProps> = ({
   hasError,
   isLoading,
 }: AnnouncementsListProps) => {
-  const isEmpty = STATIC_ANNOUNCEMENTS.length === 0;
+  const isEmpty = announcements.length === 0;
   let listContent: JSX.Element[] = [];
 
-  console.log('Debug', STATIC_ANNOUNCEMENTS.length)
+  console.log('Debug', announcements.length)
   if (isEmpty) {
     listContent = [<EmptyAnnouncementItem />];
   }
-  if (STATIC_ANNOUNCEMENTS.length > 0) {
-    listContent = getLatestsAnnouncements(STATIC_ANNOUNCEMENTS).map(
+  if (announcements.length > 0) {
+    listContent = getLatestsAnnouncements(announcements).map(
       ({ date, title, html_content }) => (
         <AnnouncementItem
           key={`key:${date}`}

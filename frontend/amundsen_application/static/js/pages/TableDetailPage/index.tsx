@@ -217,7 +217,7 @@ export class TableDetail extends React.Component<
     isExpandCollapseAllBtnVisible: true,
     selectedColumnKey: '',
     selectedColumnDetails: undefined,
-    partitionColumns: [], 
+    partitionColumns: [],
     clusteredColumns: []
   };
 
@@ -273,7 +273,7 @@ export class TableDetail extends React.Component<
         getTableLineageDispatch(this.key, defaultDepth);
       }
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ currentTab: this.getDefaultTab()});
+      this.setState({ currentTab: this.getDefaultTab() });
     }
   }
 
@@ -306,24 +306,40 @@ export class TableDetail extends React.Component<
     this.setState(newState);
   };
 
-  filterPartitionColumns() {
-    const columns = this.props.tableData?.columns
-    return columns.filter(column => {
-      if (column.badges) {
-        return column.badges.some(badge => badge.badge_name === "partition column");
-      }
-      return false;
-    });
+  renderPartitionColumns(columns) {
+
+    const filteredPartitonColumns = columns.filter(column => column.badges.some(badge => badge.badge_name === "partition column"));
+    return filteredPartitonColumns.length > 0 ? <section className="editable-section">
+      <label className="editable-section-label">
+        <div className="editable-section-label-wrapper">
+          <span className="section-title title-3">Partition Column</span>
+        </div>
+      </label>
+      <div className="editable-section-content">
+        {filteredPartitonColumns?.map((col: any) =>
+          <button id={col?.key} className="btn tag-button compact" type="button" onClick={() => this.toggleRightPanel(col)}>
+            <span className="tag-name">{col.name}</span>
+          </button>)}
+      </div>
+    </section> : null
   }
 
-  filterClusterColumns() {
-    const columns = this.props.tableData?.columns
-    return columns.filter(column => {
-      if (column.badges) {
-        return column.badges.some(badge => badge.badge_name === "cluster column");
-      }
-      return false;
-    });
+  renderClusterColumns(columns) {
+
+    const filteredClusterColumns = columns.filter(column => column.badges.some(badge => badge.badge_name === "cluster column"));
+    return filteredClusterColumns.length > 0 ? <section className="editable-section">
+      <label className="editable-section-label">
+        <div className="editable-section-label-wrapper">
+          <span className="section-title title-3">Cluster Column</span>
+        </div>
+      </label>
+      <div className="editable-section-content">
+        {filteredClusterColumns?.map((col: any) =>
+          <button id={col?.key} className="btn tag-button compact" type="button" onClick={() => this.toggleRightPanel(col)}>
+            <span className="tag-name">{col.name}</span>
+          </button>)}
+      </div>
+    </section> : null
   }
 
   getDefaultTab() {
@@ -544,8 +560,7 @@ export class TableDetail extends React.Component<
           Upstream <LoadingSpinner />
         </div>
       ) : (
-        `Upstream (${
-          tableLineage.upstream_count || tableLineage.upstream_entities.length
+        `Upstream (${tableLineage.upstream_count || tableLineage.upstream_entities.length
         })`
       );
       const upstreamLineage = isLoadingLineage
@@ -569,9 +584,8 @@ export class TableDetail extends React.Component<
           Downstream <LoadingSpinner />
         </div>
       ) : (
-        `Downstream (${
-          tableLineage.downstream_count ||
-          tableLineage.downstream_entities.length
+        `Downstream (${tableLineage.downstream_count ||
+        tableLineage.downstream_entities.length
         })`
       );
       const downstreamLineage = isLoadingLineage
@@ -618,9 +632,8 @@ export class TableDetail extends React.Component<
 
     return (
       <div
-        className={`column-tab-action-buttons ${
-          isRightPanelOpen ? 'has-open-right-panel' : 'has-closed-right-panel'
-        }`}
+        className={`column-tab-action-buttons ${isRightPanelOpen ? 'has-open-right-panel' : 'has-closed-right-panel'
+          }`}
       >
         {isExpandCollapseAllBtnVisible && this.hasColumnsToExpand() && (
           <button
@@ -630,7 +643,7 @@ export class TableDetail extends React.Component<
           >
             <h3 className="expand-collapse-all-text">
               {areNestedColumnsExpanded ||
-              areNestedColumnsExpanded === undefined
+                areNestedColumnsExpanded === undefined
                 ? Constants.COLLAPSE_ALL_NESTED_LABEL
                 : Constants.EXPAND_ALL_NESTED_LABEL}
             </h3>
@@ -710,15 +723,15 @@ export class TableDetail extends React.Component<
       const data = tableData;
       const editText = data.source
         ? `${Constants.EDIT_DESC_TEXT} ${getDescriptionSourceDisplayName(
-            data.source.source_type
-          )}`
+          data.source.source_type
+        )}`
         : '';
       const ownersEditText = data.source
         ? // TODO rename getDescriptionSourceDisplayName to more generic since
-          // owners also edited on the same file?
-          `${Constants.EDIT_OWNERS_TEXT} ${getDescriptionSourceDisplayName(
-            data.source.source_type
-          )}`
+        // owners also edited on the same file?
+        `${Constants.EDIT_OWNERS_TEXT} ${getDescriptionSourceDisplayName(
+          data.source.source_type
+        )}`
         : '';
       const editUrl = data.source ? data.source.source : '';
       const aggregatedTableNotices = aggregateResourceNotices(data, notices);
@@ -859,34 +872,8 @@ export class TableDetail extends React.Component<
               {this.renderProgrammaticDesc(
                 data.programmatic_descriptions.other
               )}
-              {console.log(this.filterPartitionColumns())}
-              {this.filterPartitionColumns()?.length > 0 ? <section className="editable-section">
-                <label className="editable-section-label">
-                  <div className="editable-section-label-wrapper">
-                    <span className="section-title title-3">Partition Column</span>
-                  </div>
-                </label>
-                <div className="editable-section-content">
-                  {this.filterPartitionColumns()?.map((col:any) => 
-                    <button id={col?.key} className="btn tag-button compact" type="button" onClick={() => this.toggleRightPanel(col)}>
-                      <span className="tag-name">{col.key}</span>
-                    </button>)}
-                </div>
-              </section> : null }
-              {console.log(this.filterClusterColumns())}
-              {this.filterClusterColumns()?.length > 0 ? <section className="editable-section">
-                <label className="editable-section-label">
-                  <div className="editable-section-label-wrapper">
-                  <span className="section-title title-3">Cluster Columns</span>
-                  </div>
-                </label>
-                <div className="editable-section-content">
-                {this.filterClusterColumns()?.map((col:any) => 
-                    <button id={col?.key} className="btn tag-button compact" type="button" onClick={() => this.toggleRightPanel(col)}>
-                      <span className="tag-name">{col.key}</span>
-                    </button>)}
-                </div>
-              </section> : null}
+              {this.renderPartitionColumns(data.columns)}
+              {this.renderClusterColumns(data.columns)}
             </aside>
             <main className="main-content-panel">
               {currentTab === Constants.TABLE_TAB.COLUMN &&
@@ -903,7 +890,7 @@ export class TableDetail extends React.Component<
         </div>
       );
     }
-    
+
 
     return (
       <DocumentTitle
