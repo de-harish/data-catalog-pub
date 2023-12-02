@@ -42,21 +42,6 @@ class SQLAlchemyAnnouncementClient(BaseAnnouncementClient):
 
             announcements = []
 
-            dummy_announcement = """
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at dapibus lorem.
-            Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-            Suspendisse est lectus, bibendum vitae vestibulum vitae, commodo eu tortor.
-            Sed rhoncus augue eget turpis interdum, eu aliquam lectus ornare. Aenean tempus in mauris vitae viverra.
-            """
-
-            for i in range(randint(5, 9)):
-                announcement = DBAnnouncement(id=i + 1,
-                                              date=datetime.now() + timedelta(days=i + 1),
-                                              title=f'Test announcement title {i + 1}',
-                                              content=dummy_announcement)
-
-                announcements.append(announcement)
-
             session.add_all(announcements)
             session.commit()
 
@@ -76,3 +61,20 @@ class SQLAlchemyAnnouncementClient(BaseAnnouncementClient):
             posts.append(post)
 
         return Announcements(posts)
+    
+    def add_post(self, title: str, content: str) -> None:
+        """Add a new announcement post to the database."""
+        session = sessionmaker(bind=self.engine)()
+        try:
+            new_announcement = DBAnnouncement(
+                date=datetime.now(),
+                title=title,
+                content=content
+            )
+            session.add(new_announcement)
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()

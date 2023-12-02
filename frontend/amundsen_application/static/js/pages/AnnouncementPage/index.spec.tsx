@@ -44,11 +44,11 @@ describe('AnnouncementPage', () => {
     });
   });
 
-  describe('createPost', () => {
+  describe('displayPost', () => {
     let content;
 
     beforeEach(() => {
-      content = shallow(subject.instance().createPost(props.posts[0], 0));
+      content = shallow(subject.instance().displayPost(props.posts[0], 0));
     });
 
     it('renders the post title', () => {
@@ -70,20 +70,20 @@ describe('AnnouncementPage', () => {
     });
   });
 
-  describe('createPosts', () => {
+  describe('displayPosts', () => {
     beforeEach(() => {
-      subject.instance().createPost = jest.fn();
-      subject.instance().createPosts();
+      subject.instance().displayPost = jest.fn();
+      subject.instance().displayPosts();
     });
 
-    it('call createPost() for each props.posts[] item', () => {
-      expect(subject.instance().createPost).toHaveBeenCalledTimes(
+    it('call displayPost() for each props.posts[] item', () => {
+      expect(subject.instance().displayPost).toHaveBeenCalledTimes(
         props.posts.length
       );
     });
 
-    it('passes correct props to createPost()', () => {
-      expect(subject.instance().createPost).toHaveBeenCalledWith(
+    it('passes correct props to displayPost()', () => {
+      expect(subject.instance().displayPost).toHaveBeenCalledWith(
         props.posts[0],
         0
       );
@@ -94,7 +94,7 @@ describe('AnnouncementPage', () => {
     let spy;
 
     beforeEach(() => {
-      spy = jest.spyOn(AnnouncementPage.prototype, 'createPosts');
+      spy = jest.spyOn(AnnouncementPage.prototype, 'displayPosts');
     });
 
     it('renders DocumentTitle w/ correct title', () => {
@@ -109,7 +109,7 @@ describe('AnnouncementPage', () => {
       );
     });
 
-    it('calls createPosts', () => {
+    it('calls displayPosts', () => {
       expect(spy).toHaveBeenCalled();
     });
   });

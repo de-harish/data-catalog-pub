@@ -5,11 +5,17 @@ import {
   GetAnnouncementsRequest,
   GetAnnouncementsResponse,
   GetAnnouncementsPayload,
+  AddAnnouncements,
 } from './types';
 
 /* ACTIONS */
 export function getAnnouncements(): GetAnnouncementsRequest {
   return { type: GetAnnouncements.REQUEST };
+}
+export function addAnnouncements() {
+  return {
+    type: AddAnnouncements.REQUEST
+  }
 }
 export function getAnnouncementsFailure(
   payload: GetAnnouncementsPayload

@@ -76,7 +76,7 @@ export class HomePage extends React.Component<HomePageProps> {
             <HomePageWidgets homePageLayout={getHomePageWidgets()} />
           </div>
           <div className="col-xs-12 col-md-6" style={{display: "flex",height: "100%", justifyContent: "center", alignItems: "center", minHeight: "80vh", flexDirection: "column"}}>
-            <img src="https://blog.talabat.com/wp-content/uploads/2020/07/Talabat-New-Brand-Logo-Colour.png" alt="" style={{width: 400, height: 120, marginBottom: 12}}/>
+            <img src="https://blog.talabat.com/wp-content/uploads/2020/07/Talabat-New-Brand-Logo-Colour.png" alt="" style={{width: 200, height: "auto", marginBottom: 12}}/>
             <SearchBarWidget />
           </div>
           {announcementsEnabled() && (
