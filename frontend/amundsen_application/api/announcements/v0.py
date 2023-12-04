@@ -6,7 +6,7 @@ from pkg_resources import iter_entry_points
 
 from http import HTTPStatus
 
-from flask import Response, jsonify, make_response, current_app as app
+from flask import Response, jsonify, make_response, current_app as app, request
 from flask.blueprints import Blueprint
 from werkzeug.utils import import_string
 
@@ -46,3 +46,34 @@ def get_announcements() -> Response:
         logging.exception(message)
         payload = jsonify({'posts': [], 'msg': message})
         return make_response(payload, HTTPStatus.INTERNAL_SERVER_ERROR)
+    
+@announcements_blueprint.route('/', methods=['POST'])
+def add_announcement() -> Response:
+    global ANNOUNCEMENT_CLIENT_INSTANCE
+    global ANNOUNCEMENT_CLIENT_CLASS
+
+    try:
+        if ANNOUNCEMENT_CLIENT_INSTANCE is None:
+            if ANNOUNCEMENT_CLIENT_CLASS is not None:
+                ANNOUNCEMENT_CLIENT_INSTANCE = ANNOUNCEMENT_CLIENT_CLASS()
+                logging.warn('Setting announcement_client via entry_point is DEPRECATED'
+                             ' and will be removed in a future version')
+            elif (app.config['ANNOUNCEMENT_CLIENT_ENABLED']
+                    and app.config['ANNOUNCEMENT_CLIENT'] is not None):
+                ANNOUNCEMENT_CLIENT_CLASS = import_string(app.config['ANNOUNCEMENT_CLIENT'])
+                ANNOUNCEMENT_CLIENT_INSTANCE = ANNOUNCEMENT_CLIENT_CLASS()
+            else:
+                payload = jsonify({'msg': 'A client for adding announcements must be configured'})
+                return make_response(payload, HTTPStatus.NOT_IMPLEMENTED)
+
+        data = request.json
+        if not data or 'title' not in data or 'content' not in data:
+            return make_response(jsonify({'msg': 'Title and content are required'}), HTTPStatus.BAD_REQUEST)
+
+        ANNOUNCEMENT_CLIENT_INSTANCE.add_post(data['title'], data['content'])
+        return make_response(jsonify({'msg': 'Announcement added successfully'}), HTTPStatus.CREATED)
+
+    except Exception as e:
+        message = 'Encountered exception: ' + str(e)
+        logging.exception(message)
+        return make_response(jsonify({'msg': message}), HTTPStatus.INTERNAL_SERVER_ERROR)

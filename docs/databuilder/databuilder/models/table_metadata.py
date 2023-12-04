@@ -51,7 +51,7 @@ def _format_as_list(tags: Union[List, str, None]) -> List:
     if isinstance(tags, str):
         tags = list(filter(None, tags.split(',')))
     if isinstance(tags, list):
-        tags = [tag.lower().strip() for tag in tags]
+        tags = [tag.strip() for tag in tags]
     return tags
 
 

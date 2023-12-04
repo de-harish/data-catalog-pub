@@ -10,6 +10,8 @@ export const CREATED_TITLE = 'Created';
 export const LAST_UPDATED_TITLE = 'Last Updated';
 export const RECENT_VIEW_COUNT_TITLE = 'Recent View Count';
 export const TAG_TITLE = 'Tags';
+export const PARTITION_COLUMN_TITLE = "Partition Columns"
+export const CLUSTER_COLUMN_TITLE = "Cluster Columns"
 export const LAST_SUCCESSFUL_RUN_TITLE = 'Last Successful Run';
 export const LAST_RUN_TITLE = 'Last Run';
 

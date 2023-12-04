@@ -17,6 +17,7 @@ import { HomePageWidgetsConfig } from 'config/config-types';
 import { HOMEPAGE_TITLE } from './constants';
 
 import './styles.scss';
+import SearchBarWidget from 'features/HomePageWidgets/SearchBarWidget';
 
 export interface DispatchFromProps {
   searchReset: () => UpdateSearchStateReset;
@@ -30,7 +31,7 @@ const getHomePageWidgetComponents = (
   /* Imports each widget based on its path and puts the widget component's
   JSX into the output array. */
 
-  layout.widgets.map((widget) => {
+  layout.widgets.filter(widget => widget.name !== "SearchBarWidget").map((widget) => {
     const WidgetComponent = React.lazy(
       () =>
         import('/js/features/HomePageWidgets/' + widget.options.path + '.tsx')
@@ -68,15 +69,18 @@ export class HomePage extends React.Component<HomePageProps> {
       <main className="container home-page">
         <div className="row">
           <div
-            className={`col-xs-12 ${
-              announcementsEnabled() ? 'col-md-8' : 'col-md-offset-1 col-md-10'
-            }`}
+            className={`col-xs-12 ${announcementsEnabled() ? 'col-md-3' : 'col-md-10'
+              }`} style={{height: "80vh", overflowY: "scroll"}}
           >
             <h1 className="sr-only">{HOMEPAGE_TITLE}</h1>
             <HomePageWidgets homePageLayout={getHomePageWidgets()} />
           </div>
+          <div className="col-xs-12 col-md-6" style={{display: "flex",height: "100%", justifyContent: "center", alignItems: "center", minHeight: "80vh", flexDirection: "column"}}>
+            <img src="https://blog.talabat.com/wp-content/uploads/2020/07/Talabat-New-Brand-Logo-Colour.png" alt="" style={{width: 200, height: "auto", marginBottom: 12}}/>
+            <SearchBarWidget />
+          </div>
           {announcementsEnabled() && (
-            <div className="col-xs-12 col-md-offset-1 col-md-3">
+            <div className="col-xs-12 col-md-2" style={{height: "80vh", overflowY: "scroll"}}>
               <Announcements />
             </div>
           )}

@@ -30,3 +30,19 @@
     padding-left: 16px;
   }
 }
+
+.announcements-button {
+  width: 300px;
+  margin-bottom: 20px;
+  background: #2b1b81;
+  border: none;
+  color: white;
+  height: 40px;
+}
+
+.create-announcement {
+  display: flex;
+  flex-direction: column; 
+  gap: 4px;
+  margin-bottom: 12px;
+}

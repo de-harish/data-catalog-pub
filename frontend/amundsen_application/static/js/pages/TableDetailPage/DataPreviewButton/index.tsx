@@ -196,7 +196,6 @@ export class DataPreviewButton extends React.Component<
 
     return (
       <>
-        {this.renderPreviewButton()}
         <Modal
           className="data-preview-modal"
           show={showModal}
